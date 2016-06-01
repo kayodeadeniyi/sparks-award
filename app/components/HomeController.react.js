@@ -30,8 +30,6 @@ export default class HomeController extends React.Component {
   render() {
     return(
       <div className='home'>
-        <h1>Hello World !</h1>
-        <Link to='/vote'>Hello</Link>
         {routerUtils.childrenWithProps(this.props.children)}
       </div>
     )

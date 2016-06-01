@@ -1,8 +1,37 @@
-.category {
+.container {
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 20%;
-  height: 200px;
-  background-color: #a12312;
+  flex-flow: row wrap;
+
+  .category {
+    position: relative;
+    width: 19.8%;
+    height: 300px;
+    margin: 0.1%;
+    background: url(http://res.cloudinary.com/kaybaba/image/upload/v1464776659/coffee-guy_f6ganj.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0,0,0, 0.5)
+    }
+
+    .details {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      top: 0;
+      left: 0;
+      color: #d1d1d1;
+      text-align: center;
+      width: 100%;
+      margin-top: 20%;
+    }
+  }
 }
