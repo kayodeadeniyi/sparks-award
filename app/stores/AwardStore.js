@@ -79,7 +79,7 @@ AppDispatcher.register(function(action) {
       break
 
     case AwardConstants.OPEN_MODAL:
-      AwardStore.setData({openModal: true})
+      AwardStore.setData({openModal: true, modalContent: action.data})
       AwardStore.emitChange()
       break
 

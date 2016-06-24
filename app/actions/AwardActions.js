@@ -2,9 +2,10 @@ var AppDispatcher = require('../dispatcher/AppDispatcher')
 var AwardConstants = require('../constants/AwardConstants')
 
 var AwardActions = {
-  openModal() {
+  openModal(data) {
     AppDispatcher.dispatch({
-      actionType: AwardConstants.OPEN_MODAL
+      actionType: AwardConstants.OPEN_MODAL,
+      data: data
     })
   },
   closeModal() {
