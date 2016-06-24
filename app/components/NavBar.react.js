@@ -14,10 +14,12 @@ export default class NavBar extends React.Component {
     return(
       <div className='nav-bar'>
         <div className='logo'>
-          Award
+          <img src='https://skilltree.andela.com/img/andela.png' className='logo-img'/>
+          <div className='logo-text'>A</div>
+          <div className="page-title">Awards</div>
         </div>
         <div className='status'>
-          login
+          Logout
         </div>
       </div>
     )
