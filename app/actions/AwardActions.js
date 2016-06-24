@@ -1,27 +1,29 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var AwardConstants = require('../constants/AwardConstants');
+var AppDispatcher = require('../dispatcher/AppDispatcher')
+var AwardConstants = require('../constants/AwardConstants')
 
 var AwardActions = {
-
-  /**
-   * @param  {string} text
-   */
-  fetchInitialData: function() {
+  openModal() {
+    AppDispatcher.dispatch({
+      actionType: AwardConstants.OPEN_MODAL
+    })
+  },
+  closeModal() {
+    AppDispatcher.dispatch({
+      actionType: AwardConstants.CLOSE_MODAL
+    })
+  },
+  fetchInitialData() {
     AppDispatcher.dispatch({
       actionType: AwardConstants.AWARD_FETCH_INITIAL_DATA
-    });
+    })
   },
 
-  /**
-   * @param  {string} id The ID of the ToDo item
-   * @param  {string} text
-   */
-  submitData: function(data) {
+  submitData(data) {
     AppDispatcher.dispatch({
       actionType: AwardConstants.AWARD_SUBMIT_DATA,
       data: data
-    });
+    })
   }
-};
+}
 
-module.exports = AwardActions;
+module.exports = AwardActions

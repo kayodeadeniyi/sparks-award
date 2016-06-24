@@ -13,7 +13,8 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel', query: {presets:['es2015', 'react']}},
-      { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' }
+      { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' },
+      {test: /\.(svg|png|gif)$/, loader: 'url-loader?limit=8192'}
     ]
   },
   stylus: {
