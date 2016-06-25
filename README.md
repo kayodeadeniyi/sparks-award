@@ -1,1 +1,1 @@
-# react-simple-boilerplate
+# Company Awards App
