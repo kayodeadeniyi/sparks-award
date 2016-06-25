@@ -4,7 +4,7 @@ import routerUtils from '../../lib/routerUtils'
 import AwardActions from '../actions/AwardActions'
 import AwardStore from '../stores/AwardStore'
 import { Link } from 'react-router'
-
+import SignIn from './SignIn.react'
 import './homeController.styl'
 
 export default class HomeController extends React.Component {
@@ -30,7 +30,7 @@ export default class HomeController extends React.Component {
   render() {
     return(
       <div className='home'>
-        {routerUtils.childrenWithProps(this.props.children)}
+        <SignIn />
       </div>
     )
   }
