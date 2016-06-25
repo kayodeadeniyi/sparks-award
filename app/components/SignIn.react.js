@@ -19,7 +19,7 @@ export default class SignIn extends React.Component {
           <div className='title-text'>Awards</div>
         </span>
         <p className='quote'>{this.state.quote}</p>
-        <a href='http://localhost:8080/vote' className='login-btn'>Login with Andela email</a>
+        <a href='/vote' className='login-btn'>Login with Andela email</a>
       </div>
     )
   }

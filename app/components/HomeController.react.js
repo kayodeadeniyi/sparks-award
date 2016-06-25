@@ -30,7 +30,7 @@ export default class HomeController extends React.Component {
   render() {
     return(
       <div className='home'>
-        <SignIn />
+        {routerUtils.childrenWithProps(this.props.children)}
       </div>
     )
   }
