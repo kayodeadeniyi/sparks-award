@@ -19,7 +19,7 @@ export default class NavBar extends React.Component {
           <div className="page-title">Awards</div>
         </div>
         <div className='status'>
-          Logout
+          <a href='/'>Sign out</a>
         </div>
       </div>
     )

@@ -1,5 +1,6 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher')
-var AwardConstants = require('../constants/AwardConstants')
+import AppDispatcher from '../dispatcher/AppDispatcher'
+import AwardConstants from '../constants/AwardConstants'
+import ajaxMessenger from '../../lib/ajaxMessenger'
 
 var AwardActions = {
   openModal(data) {
@@ -9,16 +10,20 @@ var AwardActions = {
     })
   },
   closeModal() {
+
     AppDispatcher.dispatch({
       actionType: AwardConstants.CLOSE_MODAL
     })
   },
   fetchInitialData() {
-    AppDispatcher.dispatch({
-      actionType: AwardConstants.AWARD_FETCH_INITIAL_DATA
-    })
+    ajaxMessenger('GET', '')
+      .then(data => {
+        AppDispatcher.dispatch({
+          actionType: AwardConstants.AWARD_FETCH_INITIAL_DATA,
+          data: data
+        })
+      })
   },
-
   submitData(data) {
     AppDispatcher.dispatch({
       actionType: AwardConstants.AWARD_SUBMIT_DATA,
@@ -27,4 +32,4 @@ var AwardActions = {
   }
 }
 
-module.exports = AwardActions
+export default AwardActions

@@ -23,7 +23,9 @@
 }
 
 .modal-content {
-  background-color: white;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   border-radius: 5px;
   margin: 30px auto;
   position: relative;
@@ -31,6 +33,10 @@
   box-shadow: 3px 5px 4px rgba(0, 0, 0, 0.5);
   max-width: 700px;
   padding: 15px 20px 13px 20px;
+
+  .overlay {
+    background-color: rgba(0,0,76, 0.6)
+  }
 }
 
 .modal-close {
@@ -41,4 +47,14 @@
   top: -13px;
   width: 15px;
   z-index: 2200;
+}
+
+.cat-modal {
+  position: absolute;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  color: #d1d1d1;
+  flex-direction: column;
+  align-items: center;
 }

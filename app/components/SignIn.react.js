@@ -2,14 +2,6 @@ import React from 'react'
 import './signin.styl'
 
 export default class SignIn extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      quote: "I don't need an award to inspire me to keep making music. - Jake Bugg"
-    }
-  }
-
   render() {
     return(
       <div className='signin-area'>
@@ -18,7 +10,7 @@ export default class SignIn extends React.Component {
           <div className='login-logo-text'> A </div>
           <div className='title-text'>Awards</div>
         </span>
-        <p className='quote'>{this.state.quote}</p>
+        <p className='quote'>"When the Queen says 'well done,' it means so much - Prince William"</p>
         <a href='/vote' className='login-btn'>Login with Andela email</a>
       </div>
     )

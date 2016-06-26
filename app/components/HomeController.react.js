@@ -24,7 +24,6 @@ export default class HomeController extends React.Component {
     AwardStore.removeChangeListener(this.onUpdate);
   }
   onUpdate() {
-    console.log('I have been updated');
   }
 
   render() {

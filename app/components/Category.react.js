@@ -9,7 +9,12 @@ export default class Categories extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {openModal: false}
+    this.state = {
+      openModal: false,
+      title: null,
+      desc: null,
+      data: {}
+    }
     this.onUpdate = this.onUpdate.bind(this)
     this.closeModal = this.closeModal.bind(this)
   }
@@ -20,13 +25,16 @@ export default class Categories extends React.Component {
     AwardStore.removeChangeListener(this.onUpdate)
   }
   onUpdate() {
-    var data = AwardStore.getState().data
-
-    if (data.openModal) {
+    var storeData = AwardStore.getState().data
+    if (storeData.data && storeData.data.title) {
+      this.setState({data: storeData.data})
+    }
+    if (storeData.openModal) {
       this.setState({
-        openModal: data.openModal,
-        title: data.modalContent.title,
-        desc: data.modalContent.desc
+        openModal: storeData.openModal,
+        title: storeData.modalContent.title,
+        desc: storeData.modalContent.desc,
+        image_url: storeData.modalContent.image_url
       })
     }
   }
@@ -35,16 +43,20 @@ export default class Categories extends React.Component {
   }
 
   render() {
-    console.log(this.state);
-    var array = [1,2,3,4,5,6,7,8,9,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-    var array2 = array.map(f => <Category title={`Title ${f}`} desc={`This is description ${f}`}/>)
+    var categories
+    if (this.state.data && this.state.data.title) {
+      var title = this.state.data.title
+      var desc = this.state.data.desc
+      var image_url = this.state.data.image
+      var categories = title.map((t, i) => <Category title={t} desc={desc[i]} image_url={image_url[i]} index={i} />)
+    }
 
     return (
       <div className='container'>
         <NavBar />
-        <Style show={false}/>
-        { array2 }
+        { categories }
         <Modal visible={this.state.openModal} closer={this.closeModal}>
+          <Style image_url={this.state.image_url} className='modal-content' />
           <div className='cat-modal'>
             <h1>{this.state.title}</h1>
             <p>{this.state.desc}</p>
@@ -63,17 +75,21 @@ class Category extends React.Component {
     this.showModal = this.showModal.bind(this)
   }
   showModal() {
-    var data = { title: this.props.title, desc: this.props.desc}
+    var data = {
+      title: this.props.title,
+      desc: this.props.desc,
+      image_url: this.props.image_url
+    }
     AwardActions.openModal(data)
   }
 
   render() {
     return(
-      <div className='category' onClick={this.showModal}>
+      <div className={`category${this.props.index} category`} onClick={this.showModal}>
+        <Style image_url={this.props.image_url} index={this.props.index} className='category' />
         <div className='overlay'></div>
         <div className='details'>
-          <h1>{this.props.title}</h1>
-          <p><i>{this.props.desc}</i></p>
+          <h1>{`"${this.props.title}"`}</h1>
         </div>
       </div>
     )
@@ -82,14 +98,21 @@ class Category extends React.Component {
 
 const Style = props => {
   var dangerousStyleTag = () => {
-    return {__html: `
-      .modal-content, .category {
-        background: url(http://res.cloudinary.com/kaybaba/image/upload/v1464776659/coffee-guy_f6ganj.jpg)
+    if (props.image_url) {
+      var index = ''
+      if (props.index)
+        index = props.index
+      return {__html: `
+        .${props.className}${index} {
+          background: url(${props.image_url});
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+        `
       }
-      .modal-overlay {
-        display: ${props.show}
-      }
-      `
+    } else {
+      return null
     }
   }
   return <style dangerouslySetInnerHTML={dangerousStyleTag()} />

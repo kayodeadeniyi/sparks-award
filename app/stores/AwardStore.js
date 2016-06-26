@@ -7,11 +7,9 @@ var CHANGE_EVENT = 'change'
 
 function fetchInitialData() {
   // TODO
-  console.log('I entered fetchInitialData')
 }
 
 function submitData() {
-  console.log('I entered submitData')
   // TODO
 }
 
@@ -70,6 +68,7 @@ AppDispatcher.register(function(action) {
   switch(action.actionType) {
     case AwardConstants.AWARD_FETCH_INITIAL_DATA:
       fetchInitialData()
+      AwardStore.setData({data: action.data})
       AwardStore.emitChange()
       break
 
