@@ -58,9 +58,11 @@ export default class Categories extends React.Component {
     }
 
     return (
-      <div className='container'>
+      <div className='main'>
         <NavBar />
-        { categories }
+        <div className='container'>
+          {categories}
+        </div>
         <button>Submit</button>
       </div>
     )
