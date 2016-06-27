@@ -1,6 +1,9 @@
+@import '../../node_modules/react-selectize/themes/default.css'
+
 .container {
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
 
   .category {
     position: relative;
@@ -15,14 +18,28 @@
       position: absolute;
       display: flex;
       flex-direction: column;
+      justify-content: space-around;
       align-items: center;
       top: 0;
       left: 0;
       color: #fff;
       text-align: center;
       width: 100%;
-      margin-top: 20%;
+      height: 100%;
+
+      .react-selectize.root-node {
+        width: 80%;
+      }
     }
+  }
+
+  button {
+    margin: 20px;
+    font-size: 18px;
+    padding: 10px 30px;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #496BE2
   }
 
   .modal-content {

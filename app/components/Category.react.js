@@ -1,8 +1,12 @@
 import React from 'react'
 import Modal from './Modal.react'
 import NavBar from './NavBar.react'
+import { SimpleSelect } from 'react-selectize'
+
 import AwardActions from '../actions/AwardActions'
 import AwardStore from '../stores/AwardStore'
+
+
 import './category.styl'
 
 export default class Categories extends React.Component {
@@ -48,20 +52,16 @@ export default class Categories extends React.Component {
       var title = this.state.data.title
       var desc = this.state.data.desc
       var image_url = this.state.data.image
-      var categories = title.map((t, i) => <Category title={t} desc={desc[i]} image_url={image_url[i]} index={i} />)
+      var emails = this.state.data.email
+      var names = this.state.data.name
+      categories = title.map((t, i) => <Category key={i} title={t} names={names} emails={emails} desc={desc[i]} image_url={image_url[i]} index={i} />)
     }
 
     return (
       <div className='container'>
         <NavBar />
         { categories }
-        <Modal visible={this.state.openModal} closer={this.closeModal}>
-          <Style image_url={this.state.image_url} className='modal-content' />
-          <div className='cat-modal'>
-            <h1>{this.state.title}</h1>
-            <p>{this.state.desc}</p>
-          </div>
-        </Modal>
+        <button>Submit</button>
       </div>
     )
   }
@@ -84,12 +84,27 @@ class Category extends React.Component {
   }
 
   render() {
+    var options = this.props.emails.map((email, i) => <option value={email}>{this.props.names[i]}</option>)
+
     return(
       <div className={`category${this.props.index} category`} onClick={this.showModal}>
         <Style image_url={this.props.image_url} index={this.props.index} className='category' />
         <div className='overlay'></div>
         <div className='details'>
-          <h1>{`"${this.props.title}"`}</h1>
+          <div>
+            <h1>{this.props.title}</h1>
+            <p><i>{this.props.desc}</i></p>
+          </div>
+          <SimpleSelect placeholder = 'Type or Select a name'
+            className='simple-container'
+            onValueChange = {function(value, callback){
+              // this.props.valueChange(value.value,this.props.title)
+              console.log(value, 'value');
+              callback();
+            }.bind(this)}
+          >
+            {options}
+          </SimpleSelect>
         </div>
       </div>
     )
@@ -117,3 +132,11 @@ const Style = props => {
   }
   return <style dangerouslySetInnerHTML={dangerousStyleTag()} />
 }
+
+{/*<Modal visible={this.state.openModal} closer={this.closeModal}>
+  <Style image_url={this.state.image_url} className='modal-content' />
+  <div className='cat-modal'>
+    <h1>{this.state.title}</h1>
+    <p>{this.state.desc}</p>
+  </div>
+</Modal>*/}
