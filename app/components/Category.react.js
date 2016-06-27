@@ -95,7 +95,7 @@ class Category extends React.Component {
             <h1>{this.props.title}</h1>
             <p><i>{this.props.desc}</i></p>
           </div>
-          <SimpleSelect placeholder = 'Type or Select a name'
+          <SimpleSelect placeholder = 'e.g John Doe'
             className='simple-container'
             onValueChange = {function(value, callback){
               // this.props.valueChange(value.value,this.props.title)

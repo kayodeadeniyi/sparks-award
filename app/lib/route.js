@@ -7,7 +7,7 @@ import SignIn from '../components/SignIn.react'
 
 export default (
   <Route  path='/' component={HomeController}>
-    <IndexRoute component={SignIn} />
-    <Route  path='vote' component={Category} />
+    <IndexRoute component={Category} />
+    <Route  path='login' component={SignIn} />
   </Route>
 )
