@@ -29,5 +29,8 @@ module.exports = {
   },
   plugins: [
     featureFlagPlugin
-  ]
+  ],
+  resolveLoader: {
+    root: path.join(__dirname, 'node_modules')
+  }
 }
