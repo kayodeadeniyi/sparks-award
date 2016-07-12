@@ -2,6 +2,13 @@ var path = require('path')
 var nib = require('nib')
 var jeet = require('jeet')
 var rupture = require('rupture')
+var webpack = require('webpack')
+require('dotenv').config();
+
+
+var featureFlagPlugin = new webpack.DefinePlugin({
+    API_HOST: JSON.stringify(process.env.API_HOST)
+})
 
 module.exports = {
   entry: './app/app.js',
@@ -19,5 +26,8 @@ module.exports = {
   },
   stylus: {
     use: [nib(), jeet(), rupture()]
-  }
-};
+  },
+  plugins: [
+    featureFlagPlugin
+  ]
+}

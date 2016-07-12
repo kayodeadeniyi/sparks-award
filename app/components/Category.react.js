@@ -2,6 +2,7 @@ import React from 'react'
 import Modal from './Modal.react'
 import NavBar from './NavBar.react'
 import { SimpleSelect } from 'react-selectize'
+import $ from 'jquery'
 
 import AwardActions from '../actions/AwardActions'
 import AwardStore from '../stores/AwardStore'
@@ -13,14 +14,8 @@ export default class Categories extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      openModal: false,
-      title: null,
-      desc: null,
-      data: {}
-    }
+    this.state = {data: []}
     this.onUpdate = this.onUpdate.bind(this)
-    this.closeModal = this.closeModal.bind(this)
   }
   componentDidMount() {
     AwardStore.addChangeListener(this.onUpdate)
@@ -29,32 +24,16 @@ export default class Categories extends React.Component {
     AwardStore.removeChangeListener(this.onUpdate)
   }
   onUpdate() {
-    var storeData = AwardStore.getState().data
-    if (storeData.data && storeData.data.title) {
+    var storeData = AwardStore.getState()
+    if (!$.isEmptyObject(storeData.data)) {
       this.setState({data: storeData.data})
     }
-    if (storeData.openModal) {
-      this.setState({
-        openModal: storeData.openModal,
-        title: storeData.modalContent.title,
-        desc: storeData.modalContent.desc,
-        image_url: storeData.modalContent.image_url
-      })
-    }
-  }
-  closeModal() {
-    this.setState({openModal: false})
   }
 
   render() {
     var categories
-    if (this.state.data && this.state.data.title) {
-      var title = this.state.data.title
-      var desc = this.state.data.desc
-      var image_url = this.state.data.image
-      var emails = this.state.data.email
-      var names = this.state.data.name
-      categories = title.map((t, i) => <Category key={i} title={t} names={names} emails={emails} desc={desc[i]} image_url={image_url[i]} index={i} />)
+    if (!$.isEmptyObject(this.state.data)) {
+      categories = this.state.data.map((category, index) => <Category title={category.title} key={index} names={[]} emails={[]} desc={category.short_description} image_url={category.imageUrl} index={index} />)
     }
 
     return (
@@ -72,24 +51,12 @@ export default class Categories extends React.Component {
 class Category extends React.Component {
   constructor(props) {
     super(props)
-
-    this.state = {show: false}
-    this.showModal = this.showModal.bind(this)
   }
-  showModal() {
-    var data = {
-      title: this.props.title,
-      desc: this.props.desc,
-      image_url: this.props.image_url
-    }
-    AwardActions.openModal(data)
-  }
-
   render() {
     var options = this.props.emails.map((email, i) => <option value={email}>{this.props.names[i]}</option>)
 
     return(
-      <div className={`category${this.props.index} category`} onClick={this.showModal}>
+      <div className={`category${this.props.index} category`}>
         <Style image_url={this.props.image_url} index={this.props.index} className='category' />
         <div className='overlay'></div>
         <div className='details'>

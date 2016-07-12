@@ -11,7 +11,7 @@ export default class SignIn extends React.Component {
           <div className='title-text'>Awards</div>
         </span>
         <p className='quote'>"When the Queen says 'well done,' it means so much - Prince William"</p>
-        <a href='/' className='login-btn'>Login with Andela email</a>
+        <a href={`${API_HOST}/auth/google`} className='login-btn'>Login with Andela email</a>
       </div>
     )
   }

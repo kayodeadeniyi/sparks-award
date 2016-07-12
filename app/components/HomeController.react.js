@@ -1,29 +1,34 @@
 import React from 'react'
 
 import routerUtils from '../../lib/routerUtils'
-import AwardActions from '../actions/AwardActions'
-import AwardStore from '../stores/AwardStore'
 import { Link } from 'react-router'
 import SignIn from './SignIn.react'
+
+import AuthActions from '../actions/AuthActions'
+import AwardActions from '../actions/AwardActions'
+import AuthStore from '../stores/AuthStore'
 import './homeController.styl'
 
 export default class HomeController extends React.Component {
   constructor(props) {
     super(props)
-
-    this.state = {
-
-    }
     this.onUpdate = this.onUpdate.bind(this)
   }
   componentDidMount() {
-    AwardStore.addChangeListener(this.onUpdate);
-    AwardActions.fetchInitialData()
+    AuthStore.addChangeListener(this.onUpdate)
+    if (this.props.location.pathname !== '/login') {
+      if (this.props.location.query['token']) {
+        AwardActions.fetchInitialData(this.props.location.query['token'])
+      } else {
+        window.location = '/login'
+      }
+    }
   }
   componentWillUnmount() {
-    AwardStore.removeChangeListener(this.onUpdate);
+    AuthStore.removeChangeListener(this.onUpdate)
   }
   onUpdate() {
+    var storeData = AwardStore.getState()
   }
 
   render() {

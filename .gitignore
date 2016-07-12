@@ -1,2 +1,5 @@
 node_modules
-public
+public/bundle.js
+.env
+.DS_Store
+npm-debug.log

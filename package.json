@@ -4,15 +4,21 @@
   "description": "An award system for any category in Andela",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nf start"
   },
   "author": "Kayode Adeniyi",
   "license": "ISC",
+  "engines": {
+    "node": "4.2.0"
+  },
   "dependencies": {
     "bootstrap": "^3.3.6",
     "css-loader": "^0.23.1",
+    "dotenv": "^2.0.0",
     "express": "^4.13.4",
     "flux": "^2.1.1",
+    "foreman": "1.4.1",
     "jeet": "^6.1.2",
     "jquery": "^3.0.0",
     "keymirror": "^0.1.1",
