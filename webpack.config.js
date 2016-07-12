@@ -11,7 +11,7 @@ var featureFlagPlugin = new webpack.DefinePlugin({
 })
 
 module.exports = {
-  entry: './app/app.js',
+  entry: path.resolve(__dirname, 'app/app.js'),
   output: {
     path: path.resolve(__dirname, 'public'),
     publicPath: '/assets/',
