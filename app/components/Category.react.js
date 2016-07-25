@@ -17,9 +17,10 @@ export default class Categories extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {data: [], selectedData: {}}
+    this.state = {data: [], selectedData: {}, submitData: false, error: null}
     this.onUpdate = this.onUpdate.bind(this)
     this.valueChange = this.valueChange.bind(this)
+    this.submitVote = this.submitVote.bind(this)
   }
   componentDidMount() {
     let token = localStorage.getItem('authToken')
@@ -33,7 +34,12 @@ export default class Categories extends React.Component {
     AwardStore.removeChangeListener(this.onUpdate)
   }
   valueChange(id, data) {
-    this.setState({selectedData: assign({}, this.state.selectedData, {[id]: data.value})})
+    this.setState({error: null})
+
+    if (!$.isEmptyObject(data))
+      this.setState({selectedData: assign({}, this.state.selectedData, {[id]: data.value})})
+    else
+      delete this.state.selectedData[id]
   }
   onUpdate() {
     var storeData = AwardStore.getState()
@@ -42,8 +48,12 @@ export default class Categories extends React.Component {
     }
   }
   submitVote() {
-    console.log(this.state.selectedData)
-    AwardActions.submitData(this.state.selectedData)
+    if (!$.isEmptyObject(this.state.selectedData)) {
+      AwardActions.submitData(this.state.selectedData)
+      this.setState({submitData: true})
+    } else{
+      this.setState({error: 'Please cast at least a vote.'})
+    }
   }
 
   render() {
@@ -70,10 +80,18 @@ export default class Categories extends React.Component {
     return (
       <div className='main'>
         <NavBar />
-        <div className='container'>
-          {categories}
-        </div>
-        <button onClick={this.submitVote.bind(this)}>Submit</button>
+        {
+          this.state.submitData ? <SuccessPage /> :
+          (
+            <div className='holder'>
+              <div className='container'>
+                {categories}
+              </div>
+              <p className='error-msg'>{this.state.error}</p>
+              <button onClick={this.submitVote}>Submit</button>
+            </div>
+          )
+        }
       </div>
     )
   }
@@ -131,4 +149,13 @@ const Style = props => {
     }
   }
   return <style dangerouslySetInnerHTML={dangerousStyleTag()} />
+}
+
+const SuccessPage = () => {
+  return (
+    <div>
+      <h1>Thanks for voting</h1>
+      <center>Your entries have been submitted.</center>
+    </div>
+  )
 }

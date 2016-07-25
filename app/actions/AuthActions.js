@@ -3,17 +3,14 @@ import AuthConstants from '../constants/AuthConstants'
 import ajaxMessenger from '../../lib/ajaxMessenger'
 
 var AuthActions = {
-  getCurrentUser() {
-    AppDispatcher.dispatch({
-      actionType: AuthConstants.GET_USER
-    })
-  },
-  confirmToken(data) {
-    console.log(data, 'I should confirm token here');
-    AppDispatcher.dispatch({
-      actionType: AuthConstants.DID_CONFIRM_TOKEN,
-      data: data
-    })
+  signOut(token) {
+    ajaxMessenger('GET', 'auth/logout', token)
+      .always(response => {
+        AppDispatcher.dispatch({
+          actionType: AuthConstants.DID_SIGNOUT_USER,
+          data: response
+        })
+      })
   }
 }
 

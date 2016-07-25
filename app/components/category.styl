@@ -1,11 +1,14 @@
 @import '../../node_modules/react-selectize/themes/default.css'
 
 .main {
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+
+  &, .holder {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
 
   .container {
     display: flex;
@@ -46,10 +49,6 @@
         }
       }
     }
-
-    .modal-content {
-      height: 70%;
-    }
   }
 
   .overlay {
@@ -77,4 +76,6 @@
       cursor: pointer;
     }
   }
+
+  .error-msg { color: #a12312; }
 }

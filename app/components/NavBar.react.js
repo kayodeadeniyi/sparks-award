@@ -1,4 +1,8 @@
 import React from 'react'
+
+import AuthActions from '../actions/AuthActions'
+import routerUtils from '../../lib/routerUtils'
+
 import './navbar.styl'
 
 export default class NavBar extends React.Component {
@@ -9,6 +13,12 @@ export default class NavBar extends React.Component {
 
     }
   }
+  signOut() {
+    let token = localStorage.getItem('authToken')
+    localStorage.removeItem('authToken')
+    AuthActions.signOut(token)
+    routerUtils.replace('login')
+  }
 
   render() {
     return(
@@ -18,9 +28,7 @@ export default class NavBar extends React.Component {
           <div className='logo-text'>A</div>
           <div className="page-title">Awards</div>
         </div>
-        <div className='status'>
-          <a href='/login'>Sign out</a>
-        </div>
+        <a className='status' onClick={this.signOut}>Sign out</a>
       </div>
     )
   }
