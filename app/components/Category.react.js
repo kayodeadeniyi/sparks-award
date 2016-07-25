@@ -1,9 +1,12 @@
 import React from 'react'
+import $ from 'jquery'
+import assign from 'object-assign'
+
 import Modal from './Modal.react'
 import NavBar from './NavBar.react'
 import { SimpleSelect } from 'react-selectize'
-import $ from 'jquery'
 
+import routerUtils from '../../lib/routerUtils'
 import AwardActions from '../actions/AwardActions'
 import AwardStore from '../stores/AwardStore'
 
@@ -14,14 +17,23 @@ export default class Categories extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {data: []}
+    this.state = {data: [], selectedData: {}}
     this.onUpdate = this.onUpdate.bind(this)
+    this.valueChange = this.valueChange.bind(this)
   }
   componentDidMount() {
+    let token = localStorage.getItem('authToken')
+
+    if (token) { AwardActions.fetchInitialData(token) }
+    else { routerUtils.replace('login') }
+
     AwardStore.addChangeListener(this.onUpdate)
   }
   componentWillUnmount() {
     AwardStore.removeChangeListener(this.onUpdate)
+  }
+  valueChange(id, data) {
+    this.setState({selectedData: assign({}, this.state.selectedData, {[id]: data.value})})
   }
   onUpdate() {
     var storeData = AwardStore.getState()
@@ -29,11 +41,30 @@ export default class Categories extends React.Component {
       this.setState({data: storeData.data})
     }
   }
+  submitVote() {
+    console.log(this.state.selectedData)
+    AwardActions.submitData(this.state.selectedData)
+  }
 
   render() {
     var categories
     if (!$.isEmptyObject(this.state.data)) {
-      categories = this.state.data.map((category, index) => <Category title={category.title} key={index} names={[]} emails={[]} desc={category.short_description} image_url={category.imageUrl} index={index} />)
+      categories = this.state.data.categories.map(category =>
+        {
+          return (
+            <Category
+              category_id={category.id}
+              title={category.title}
+              key={category.id}
+              users={this.state.data.users}
+              desc={category.short_description}
+              image_url={category.imageUrl}
+              index={category.id}
+              valueChange={this.valueChange}
+            />
+          )
+        }
+      )
     }
 
     return (
@@ -42,18 +73,22 @@ export default class Categories extends React.Component {
         <div className='container'>
           {categories}
         </div>
-        <button>Submit</button>
+        <button onClick={this.submitVote.bind(this)}>Submit</button>
       </div>
     )
   }
 }
 
+
 class Category extends React.Component {
   constructor(props) {
     super(props)
   }
+  valueChange(value) {
+    this.props.valueChange(this.props.category_id, value)
+  }
   render() {
-    var options = this.props.emails.map((email, i) => <option value={email}>{this.props.names[i]}</option>)
+    var options = this.props.users.map(user => <option key={`${user.email}-${user.name}`} value={user.email}>{user.name}</option>)
 
     return(
       <div className={`category${this.props.index} category`}>
@@ -66,11 +101,7 @@ class Category extends React.Component {
           </div>
           <SimpleSelect placeholder = 'e.g John Doe'
             className='simple-container'
-            onValueChange = {function(value, callback){
-              // this.props.valueChange(value.value,this.props.title)
-              console.log(value, 'value');
-              callback();
-            }.bind(this)}
+            onValueChange = {this.valueChange.bind(this)}
           >
             {options}
           </SimpleSelect>
@@ -101,11 +132,3 @@ const Style = props => {
   }
   return <style dangerouslySetInnerHTML={dangerousStyleTag()} />
 }
-
-{/*<Modal visible={this.state.openModal} closer={this.closeModal}>
-  <Style image_url={this.state.image_url} className='modal-content' />
-  <div className='cat-modal'>
-    <h1>{this.state.title}</h1>
-    <p>{this.state.desc}</p>
-  </div>
-</Modal>*/}

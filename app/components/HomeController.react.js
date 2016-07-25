@@ -1,7 +1,6 @@
 import React from 'react'
 
 import routerUtils from '../../lib/routerUtils'
-import { Link } from 'react-router'
 import SignIn from './SignIn.react'
 
 import AuthActions from '../actions/AuthActions'
@@ -15,13 +14,16 @@ export default class HomeController extends React.Component {
     this.onUpdate = this.onUpdate.bind(this)
   }
   componentDidMount() {
-    AuthStore.addChangeListener(this.onUpdate)
-    if (this.props.location.pathname !== '/login') {
-      if (this.props.location.query['token']) {
-        AwardActions.fetchInitialData(this.props.location.query['token'])
-      } else {
-        window.location = '/login'
-      }
+    var token = localStorage.getItem('authToken')
+    if (token) {
+      routerUtils.replace('vote')
+    }
+    else if (this.props.location.query['token']) {
+      localStorage.setItem('authToken', this.props.location.query['token'])
+      routerUtils.replace('vote')
+    }
+    else {
+      routerUtils.replace('login')
     }
   }
   componentWillUnmount() {

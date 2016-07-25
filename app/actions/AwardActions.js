@@ -4,7 +4,7 @@ import ajaxMessenger from '../../lib/ajaxMessenger'
 
 var AwardActions = {
   fetchInitialData(token) {
-    ajaxMessenger('GET', '/categories', token)
+    ajaxMessenger('GET', 'categories', token)
       .always(data => {
         AppDispatcher.dispatch({
           actionType: AwardConstants.AWARD_FETCH_INITIAL_DATA,
@@ -12,11 +12,15 @@ var AwardActions = {
         })
       })
   },
+
   submitData(data) {
-    AppDispatcher.dispatch({
-      actionType: AwardConstants.AWARD_SUBMIT_DATA,
-      data: data
-    })
+    ajaxMessenger('POST', 'votes', localStorage.getItem('authToken'), {votes: {selectedCategories: data}})
+      .always(response => {
+        AppDispatcher.dispatch({
+          actionType: AwardConstants.AWARD_SUBMIT_DATA,
+          data: response
+        })
+      })
   }
 }
 
