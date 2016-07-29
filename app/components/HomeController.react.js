@@ -8,11 +8,10 @@ import './homeController.styl'
 export default class HomeController extends React.Component {
   constructor(props) {
     super(props)
-    this.onUpdate = this.onUpdate.bind(this)
   }
   componentDidMount() {
     let token = localStorage.getItem('authToken')
-    
+
     if (token) {
       routerUtils.setLocation('/vote')
     }

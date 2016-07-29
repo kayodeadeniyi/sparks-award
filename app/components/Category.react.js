@@ -47,9 +47,13 @@ export default class Categories extends React.Component {
       delete this.state.selectedData[id]
   }
   onUpdate() {
-    var storeData = AwardStore.getState()
-    if (!$.isEmptyObject(storeData.data)) {
-      this.setState({data: storeData.data})
+    let storeData = AwardStore.getState().data
+    if (!$.isEmptyObject(storeData && storeData.categories)) {
+      this.setState({data: storeData})
+    }
+
+    if (AwardStore.hasErrors()) {
+      routerUtils.replace('error')
     }
   }
   submitVote() {

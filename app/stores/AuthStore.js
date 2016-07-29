@@ -8,7 +8,7 @@ var AuthStore = StorePrototype()
 AppDispatcher.register(function(action) {
   switch(action.actionType) {
     case AuthConstants.DID_CONFIRM_TOKEN:
-      AuthStore.setData({currentUser: action.data})
+      AuthStore.receiveData({currentUser: action.data})
       AuthStore.emitChange()
       break
 
