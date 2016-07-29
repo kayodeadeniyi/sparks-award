@@ -18,9 +18,11 @@ export default class Categories extends React.Component {
     super(props)
 
     this.state = {data: [], selectedData: {}, submitData: false, error: null}
+
+    this.goBack = this.goBack.bind(this)
     this.onUpdate = this.onUpdate.bind(this)
-    this.valueChange = this.valueChange.bind(this)
     this.submitVote = this.submitVote.bind(this)
+    this.valueChange = this.valueChange.bind(this)
   }
   componentDidMount() {
     let token = localStorage.getItem('authToken')
@@ -32,6 +34,9 @@ export default class Categories extends React.Component {
   }
   componentWillUnmount() {
     AwardStore.removeChangeListener(this.onUpdate)
+  }
+  goBack() {
+    this.setState({submitData: false})
   }
   valueChange(id, data) {
     this.setState({error: null})
@@ -81,7 +86,7 @@ export default class Categories extends React.Component {
       <div className='main'>
         <NavBar />
         {
-          this.state.submitData ? <SuccessPage /> :
+          this.state.submitData ? <SuccessPage goBack={this.goBack} /> :
           (
             <div className='holder'>
               <div className='container'>
@@ -117,10 +122,7 @@ class Category extends React.Component {
             <h1>{this.props.title}</h1>
             <p><i>{this.props.desc}</i></p>
           </div>
-          <SimpleSelect placeholder = 'e.g John Doe'
-            className='simple-container'
-            onValueChange = {this.valueChange.bind(this)}
-          >
+          <SimpleSelect placeholder = 'e.g John Doe' className='simple-container' onValueChange = {this.valueChange.bind(this)}>
             {options}
           </SimpleSelect>
         </div>
@@ -151,11 +153,12 @@ const Style = props => {
   return <style dangerouslySetInnerHTML={dangerousStyleTag()} />
 }
 
-const SuccessPage = () => {
+const SuccessPage = props => {
   return (
     <div>
       <h1>Thanks for voting</h1>
       <center>Your entries have been submitted.</center>
+      <center>You can click <a className='back' onClick={props.goBack}>back</a> to modify your votes.</center>
     </div>
   )
 }

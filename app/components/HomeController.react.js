@@ -3,9 +3,6 @@ import React from 'react'
 import routerUtils from '../../lib/routerUtils'
 import SignIn from './SignIn.react'
 
-import AuthActions from '../actions/AuthActions'
-import AwardActions from '../actions/AwardActions'
-import AuthStore from '../stores/AuthStore'
 import './homeController.styl'
 
 export default class HomeController extends React.Component {
@@ -14,23 +11,18 @@ export default class HomeController extends React.Component {
     this.onUpdate = this.onUpdate.bind(this)
   }
   componentDidMount() {
-    var token = localStorage.getItem('authToken')
+    let token = localStorage.getItem('authToken')
+    
     if (token) {
-      routerUtils.replace('vote')
+      routerUtils.setLocation('/vote')
     }
     else if (this.props.location.query['token']) {
       localStorage.setItem('authToken', this.props.location.query['token'])
-      routerUtils.replace('vote')
+      routerUtils.setLocation('/vote')
     }
     else {
-      routerUtils.replace('login')
+      routerUtils.setLocation('/login')
     }
-  }
-  componentWillUnmount() {
-    AuthStore.removeChangeListener(this.onUpdate)
-  }
-  onUpdate() {
-    var storeData = AwardStore.getState()
   }
 
   render() {
