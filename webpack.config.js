@@ -30,7 +30,7 @@ module.exports = {
   plugins: [
     featureFlagPlugin
   ],
-  resolveLoader: {
+  resolve: {
     root: path.join(__dirname, 'node_modules')
   }
 }

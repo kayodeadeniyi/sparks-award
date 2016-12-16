@@ -2,7 +2,6 @@ import React from 'react'
 import $ from 'jquery'
 import assign from 'object-assign'
 
-import Modal from './Modal.react'
 import NavBar from './NavBar.react'
 import { SimpleSelect } from 'react-selectize'
 

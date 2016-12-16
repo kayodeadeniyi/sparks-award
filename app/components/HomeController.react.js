@@ -13,7 +13,7 @@ export default class HomeController extends React.Component {
     let token = localStorage.getItem('authToken')
 
     if (token) {
-      routerUtils.setLocation('/vote')
+      // routerUtils.setLocation('/vote')
     }
     else if (this.props.location.query['token']) {
       localStorage.setItem('authToken', this.props.location.query['token'])
