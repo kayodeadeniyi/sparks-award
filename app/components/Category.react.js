@@ -3,7 +3,9 @@ import $ from 'jquery'
 import assign from 'object-assign'
 
 import NavBar from './NavBar.react'
+import Footer from './Footer.react'
 import { SimpleSelect } from 'react-selectize'
+import loader from '../assets/gears.svg'
 
 import routerUtils from '../../lib/routerUtils'
 import AwardActions from '../actions/AwardActions'
@@ -16,23 +18,11 @@ export default class Categories extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {data: [], selectedData: {}, submitData: false, error: null}
+    this.state = {selectedData: {}, submitData: false, error: null}
 
     this.goBack = this.goBack.bind(this)
-    this.onUpdate = this.onUpdate.bind(this)
     this.submitVote = this.submitVote.bind(this)
     this.valueChange = this.valueChange.bind(this)
-  }
-  componentDidMount() {
-    let token = localStorage.getItem('authToken')
-
-    if (token) { AwardActions.fetchInitialData(token) }
-    else { routerUtils.replace('login') }
-
-    AwardStore.addChangeListener(this.onUpdate)
-  }
-  componentWillUnmount() {
-    AwardStore.removeChangeListener(this.onUpdate)
   }
   goBack() {
     this.setState({submitData: false})
@@ -45,16 +35,6 @@ export default class Categories extends React.Component {
     else
       delete this.state.selectedData[id]
   }
-  onUpdate() {
-    let storeData = AwardStore.getState().data
-    if (!$.isEmptyObject(storeData && storeData.categories)) {
-      this.setState({data: storeData})
-    }
-
-    if (AwardStore.hasErrors()) {
-      routerUtils.replace('error')
-    }
-  }
   submitVote() {
     if (!$.isEmptyObject(this.state.selectedData)) {
       AwardActions.submitData(this.state.selectedData)
@@ -63,18 +43,21 @@ export default class Categories extends React.Component {
       this.setState({error: 'Please cast at least a vote.'})
     }
   }
+  loading() {
+    return (<img className='loader' src={loader} />)
+  }
 
   render() {
     var categories
-    if (!$.isEmptyObject(this.state.data)) {
-      categories = this.state.data.categories.map(category =>
+    if (!$.isEmptyObject(this.props.data)) {
+      categories = this.props.data.categories.map(category =>
         {
           return (
             <Category
               category_id={category.id}
               title={category.title}
               key={category.id}
-              users={this.state.data.users}
+              users={this.props.data.users}
               desc={category.short_description}
               image_url={category.imageUrl}
               index={category.id}
@@ -87,16 +70,23 @@ export default class Categories extends React.Component {
 
     return (
       <div className='main'>
-        <NavBar />
         {
           this.state.submitData ? <SuccessPage goBack={this.goBack} /> :
           (
-            <div className='holder'>
-              <div className='container'>
-                {categories}
-              </div>
-              <p className='error-msg'>{this.state.error}</p>
-              <button onClick={this.submitVote}>Submit</button>
+            <div className='main-holder'>
+              {
+                $.isEmptyObject(this.props.data) ? this.loading() :
+                (
+                  <div className='holder'>
+                    <div className='container'>
+                      {categories}
+                    </div>
+                    <p className='error-msg'>{this.state.error}</p>
+                    <button onClick={this.submitVote}>Submit</button>
+                  </div>
+                )
+              }
+
             </div>
           )
         }
@@ -158,7 +148,7 @@ const Style = props => {
 
 const SuccessPage = props => {
   return (
-    <div>
+    <div className='success'>
       <h1>Thanks for voting</h1>
       <center>Your entries have been submitted.</center>
       <center>You can click <a className='back' onClick={props.goBack}>back</a> to modify your votes.</center>

@@ -8,6 +8,42 @@
   color: #fff;
   padding: 0 15px;
   margin-bottom: 30px;
+  font-size: 17px;
+
+  .right-column {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    .user-details {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      padding: 0 20px;
+    }
+  }
+
+  .nav-link-container {
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+
+    .nav-link {
+      color: #fff;
+      padding: 0 20px;
+      text-decoration: none;
+
+      &.active { color: #ffa500; }
+    }
+  }
+
+  .user-avatar {
+    height: 50px;
+    width: 50px;
+    border-radius: 100px;
+    border: 3px solid #919191;
+    margin-right: 7px;
+  }
 
   .logo {
     display: flex;
@@ -34,9 +70,6 @@
   }
 
   .status {
-    padding-top: 25px;
-    padding-right: 20px;
-    font-size: 15px;
     color: #fff;
 
     &:hover {

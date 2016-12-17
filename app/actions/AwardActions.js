@@ -13,6 +13,16 @@ var AwardActions = {
       })
   },
 
+  fetchVotes(token) {
+    ajaxMessenger('GET', 'votes', token)
+      .always(data => {
+        AppDispatcher.dispatch({
+          actionType: AwardConstants.AWARD_FETCH_VOTES,
+          data: data
+        })
+      })
+  },
+
   submitData(data) {
     ajaxMessenger('POST', 'votes', localStorage.getItem('authToken'), {votes: {selectedCategories: data}})
       .always(response => {

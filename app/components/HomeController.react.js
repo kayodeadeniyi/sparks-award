@@ -2,32 +2,67 @@ import React from 'react'
 
 import routerUtils from '../../lib/routerUtils'
 import SignIn from './SignIn.react'
+import NavBar from './NavBar.react'
+import Footer from './Footer.react'
+import AwardActions from '../actions/AwardActions'
+import AwardStore from '../stores/AwardStore'
+import $ from 'jquery'
 
 import './homeController.styl'
 
 export default class HomeController extends React.Component {
   constructor(props) {
     super(props)
-  }
-  componentDidMount() {
-    let token = localStorage.getItem('authToken')
 
+    this.state = {
+      data: {},
+      error: false
+    }
+
+    this.onUpdate = this.onUpdate.bind(this)
+  }
+  componentWillMount() {
+    let token = localStorage.getItem('authToken')
     if (token) {
-      // routerUtils.setLocation('/vote')
+      AwardActions.fetchInitialData(token)
+      if (this.props.location.pathname === '/')
+        routerUtils.replace('/vote')
     }
     else if (this.props.location.query['token']) {
       localStorage.setItem('authToken', this.props.location.query['token'])
-      routerUtils.setLocation('/vote')
+      AwardActions.fetchInitialData(this.props.location.query['token'])
+      routerUtils.replace('/vote')
     }
     else {
       routerUtils.setLocation('/login')
+    }
+  }
+  componentDidMount() {
+    AwardStore.addChangeListener(this.onUpdate)
+  }
+  componentWillUnmount() {
+    AwardStore.removeChangeListener(this.onUpdate)
+  }
+  onUpdate() {
+    let storeData = AwardStore.getState().data
+    if (!$.isEmptyObject(storeData && storeData.categories)) {
+      this.setState({data: storeData})
+    }
+    let hasErrors = AwardStore.hasErrors()
+    if (hasErrors) {
+      this.setState({error: hasErrors})
+      routerUtils.replace('error')
     }
   }
 
   render() {
     return(
       <div className='home'>
-        {routerUtils.childrenWithProps(this.props.children)}
+        <div>
+          <NavBar currentUser={this.state.data.current_user}/>
+          {routerUtils.childrenWithProps(this.props.children, {data: this.state.data})}
+        </div>
+        <Footer />
       </div>
     )
   }

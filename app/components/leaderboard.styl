@@ -1,0 +1,46 @@
+
+.leaderboard {
+  padding: 0 50px;
+  display: flex;
+  justify-content: center;
+
+  .loader {
+    margin: 10vh 0;
+  }
+
+  .leaderboard-card {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    width: 100%;
+    border: 1px solid #eeeeee;
+    border-radius: 2px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.19);
+
+    .card {
+      width: 25%;
+      background-color: white;
+      border: 1px solid #eeeeee;
+      border-radius: 2px;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.19);
+      margin-bottom: 15px;
+      margin-left: 2%;
+      padding: 10px 25px;
+    }
+  }
+
+  +below(992px) {
+    .leaderboard-card .card {
+      width: 40%;
+      padding: 10px 15px;
+    }
+  }
+
+  +below(600px) {
+    .leaderboard-card .card {
+      width: 90%;
+    }
+  }
+}

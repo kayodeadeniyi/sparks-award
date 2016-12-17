@@ -2,7 +2,19 @@
 
 .main {
 
-  &, .holder {
+  .main-holder {
+    padding: 0 50px;
+    display: flex;
+    justify-content: center;
+
+    .loader {
+      margin: 10vh 0;
+    }
+  }
+
+  .success { text-align: center; }
+  
+  .holder {
     display: flex;
     flex-flow: column wrap;
     justify-content: space-between;
@@ -13,17 +25,31 @@
   .container {
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: space-around;
     width: 100%;
 
     .category {
       position: relative;
-      width: 22%;
       height: 300px;
-      margin: 30px;
       background-repeat: no-repeat;
       background-position: center;
-      vertical-align: middle;
+      width: 27%;
+      background-color: white;
+      border: 1px solid #eeeeee;
+      border-radius: 2px;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.19);
+      margin-bottom: 25px;
+      margin-right: 2%;
+      padding: 10px 25px;
+
+      +below(992px) {
+        width: 40%;
+        padding: 10px 15px;
+      }
+
+      +below(600px) {
+          width: 90%;
+      }
 
       .details {
         position: absolute;

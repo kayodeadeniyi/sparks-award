@@ -17,6 +17,11 @@ AppDispatcher.register(function(action) {
       AwardStore.emitChange()
       break
 
+    case AwardConstants.AWARD_FETCH_VOTES:
+      AwardStore.receiveData(action.data)
+      AwardStore.emitChange()
+      break
+
     default:
       // no op
   }

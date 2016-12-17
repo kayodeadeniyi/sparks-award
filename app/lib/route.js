@@ -8,10 +8,13 @@ import SignIn from '../components/SignIn.react'
 import Error from '../components/Error.react'
 
 export default (
-  <Route  path='/' component={HomeController}>
-    <Route path='vote' component={Category} />
+  <Route  path='/'>
+    <IndexRoute component={HomeController} />
+    <Route  component={HomeController}>
+      <Route path='vote' component={Category} />
+      <Route path='leaderboard' component={LeaderBoard} />
+    </Route>
     <Route  path='login' component={SignIn} />
     <Route  path='error' component={Error} />
-    <Route path='leaderboard' component={LeaderBoard} />
   </Route>
 )
