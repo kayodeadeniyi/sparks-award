@@ -3,6 +3,7 @@
   padding: 0 50px;
   display: flex;
   justify-content: center;
+  color: #515151;
 
   .loader {
     margin: 10vh 0;
@@ -17,24 +18,38 @@
     border-radius: 2px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.19);
+    background-color: #FAFAFA;
 
     .card {
       width: 25%;
-      background-color: white;
+      background-color: #FFF;
       border: 1px solid #eeeeee;
       border-radius: 2px;
       box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.19);
       margin-bottom: 15px;
       margin-left: 2%;
-      padding: 10px 25px;
+      color: #fff;
     }
+  }
+
+  .card-title {
+    padding: 20px
+    background-color: #5C6BC0;
+  }
+
+  .card-description {
+    padding: 20px
+    background-color: #9FA8DA;
+  }
+
+  .winner {
+    padding: 20px;
+    color: #515151;
   }
 
   +below(992px) {
     .leaderboard-card .card {
       width: 40%;
-      padding: 10px 15px;
     }
   }
 

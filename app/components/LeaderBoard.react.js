@@ -60,9 +60,12 @@ const Cards = props => {
           props.votes.map((vote) => {
             return (
               <div className='card' key={vote.category.id}>
-                <h2>{vote.category.title}</h2>
-                <p><i>{vote.category.short_description}</i></p>
-                <h4>{vote.user.name}({vote.user.email})</h4>
+                <div className='card-title'><h2>{vote.category.title}</h2></div>
+                <div className='card-description'><i>{vote.category.short_description}</i></div>
+                <div className='winner'>
+                  <p>{vote.user.name}</p>
+                  <p>({vote.user.email})</p>
+                </div>
               </div>
             )
           })
