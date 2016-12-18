@@ -6,7 +6,7 @@ export default class SignIn extends React.Component {
     return(
       <div className='signin-area'>
         <span className='logo'>
-          <img src='http://mradeybee.com/wp-content/uploads/2016/06/Andela-logo-landscape-blue-400px.png' className='logo-img'/>
+          <img src='http://mradeybee.com/wp-content/uploads/2016/06/Andela-logo-landscape-blue-400px.png' className='logo-img rotate'/>
           <div className='login-logo-text'> A </div>
           <div className='title-text'>Awards</div>
         </span>

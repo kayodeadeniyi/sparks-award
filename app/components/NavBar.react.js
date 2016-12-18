@@ -21,7 +21,7 @@ export default class NavBar extends React.Component {
     return(
       <div className='nav-bar'>
         <div className='logo'>
-          <img src='http://skilltree.andela.com/img/andela.png' className='logo-img rotate'/>
+          <img src='https://skilltree.andela.com/img/andela.png' className='logo-img rotate'/>
           <div className='logo-text'>A</div>
           <div className="page-title">Awards</div>
           <div className='nav-link-container'>
