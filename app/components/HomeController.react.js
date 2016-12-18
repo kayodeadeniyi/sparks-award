@@ -16,7 +16,8 @@ export default class HomeController extends React.Component {
 
     this.state = {
       data: {},
-      error: false
+      error: false,
+      login: false
     }
 
     this.onUpdate = this.onUpdate.bind(this)
@@ -25,12 +26,14 @@ export default class HomeController extends React.Component {
     let token = localStorage.getItem('authToken')
     if (token) {
       AwardActions.fetchInitialData(token)
+      this.setState({login: true})
       if (this.props.location.pathname === '/')
         routerUtils.replace('/vote')
     }
     else if (this.props.location.query['token']) {
       localStorage.setItem('authToken', this.props.location.query['token'])
       AwardActions.fetchInitialData(this.props.location.query['token'])
+      this.setState({login: true})
       routerUtils.replace('/vote')
     }
     else {
@@ -56,6 +59,8 @@ export default class HomeController extends React.Component {
   }
 
   render() {
+    if (!this.state.login)
+      return null
     return(
       <div className='home'>
         <div>

@@ -104,7 +104,7 @@ class Category extends React.Component {
     this.props.valueChange(this.props.category_id, value)
   }
   render() {
-    var options = this.props.users.map(user => <option key={`${user.email}-${user.name}`} value={user.email}>{user.name}</option>)
+    var options = this.props.users.map(user => <option key={user.email} value={user.email}>{user.name}</option>)
 
     return(
       <div className={`category${this.props.index} category`}>
@@ -115,7 +115,7 @@ class Category extends React.Component {
             <h1>{this.props.title}</h1>
             <p><i>{this.props.desc}</i></p>
           </div>
-          <SimpleSelect placeholder = 'e.g John Doe' className='simple-container' onValueChange = {this.valueChange.bind(this)}>
+          <SimpleSelect placeholder = 'Example: Kay Ade' className='simple-container' onValueChange = {this.valueChange.bind(this)}>
             {options}
           </SimpleSelect>
         </div>
